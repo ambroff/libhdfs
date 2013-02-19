@@ -1,0 +1,7 @@
+/Makefile
+/config.guess.cdbs-orig
+/config.log
+/config.status
+/config.sub.cdbs-orig
+/debian/stamp-*
+/libtool
