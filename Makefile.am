@@ -22,6 +22,9 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libhdfs.la
 libhdfs_la_SOURCES = hdfs.c hdfsJniHelper.c hdfs.h
 
+include_libhdfsdir = $(includedir)
+include_libhdfs_HEADERS = hdfs.h hdfsJniHelper.h
+
 #check_PROGRAMS = hdfs_test hdfs_read hdfs_write
 check_PROGRAMS = hdfs_test hdfs_read hdfs_write
 

@@ -1,6 +1,6 @@
-*.o
-*.lo
 *.la
+*.lo
+*.o
 /.libs/
 /Makefile
 /config.guess.cdbs-orig
@@ -9,6 +9,7 @@
 /config.sub.cdbs-orig
 /debian/*.debhelper*
 /debian/*.substvars
+/debian/files
 /debian/libhdfs-dev/
 /debian/libhdfs1/
 /debian/stamp-*

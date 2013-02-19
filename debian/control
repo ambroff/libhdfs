@@ -1,5 +1,5 @@
 Source: libhdfs
-Priority: net
+Priority: extra
 Maintainer: Kyle Ambroff <ambroff@jawbone.com>
 Build-Depends: debhelper (>= 8.0.0),
  cdbs,
@@ -20,6 +20,8 @@ Description: Development support for libhdfs1
 Package: libhdfs1
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ default-jre-headless,
+ openjdk-7-jre | openjdk-6-jre | java7-runtime | java6-runtime
 Description: JNI Bindings to access Hadoop HDFS from C
  See http://wiki.apache.org/hadoop/LibHDFS

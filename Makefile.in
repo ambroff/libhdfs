@@ -31,6 +31,7 @@
 # limitations under the License.
 #
 
+
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -71,7 +72,8 @@ check_PROGRAMS = hdfs_test$(EXEEXT) hdfs_read$(EXEEXT) \
 	hdfs_write$(EXEEXT)
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(top_srcdir)/configure $(am__configure_deps) depcomp
+	$(top_srcdir)/configure $(am__configure_deps) depcomp \
+	$(include_libhdfs_HEADERS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/apfunctions.m4 \
 	$(top_srcdir)/m4/apjava.m4 $(top_srcdir)/m4/apsupport.m4 \
@@ -112,7 +114,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(libdir)"
+am__installdirs = "$(DESTDIR)$(libdir)" \
+	"$(DESTDIR)$(include_libhdfsdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libhdfs_la_LIBADD =
 am_libhdfs_la_OBJECTS = hdfs.lo hdfsJniHelper.lo
@@ -146,6 +149,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+HEADERS = $(include_libhdfs_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 ACLOCAL = @ACLOCAL@
@@ -277,6 +281,8 @@ top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libhdfs.la
 libhdfs_la_SOURCES = hdfs.c hdfsJniHelper.c hdfs.h
+include_libhdfsdir = $(includedir)
+include_libhdfs_HEADERS = hdfs.h hdfsJniHelper.h
 hdfs_test_SOURCES = hdfs_test.c hdfs.h
 hdfs_test_LDADD = ${libdir}/libhdfs.la 
 hdfs_read_SOURCES = hdfs_read.c
@@ -415,6 +421,27 @@ clean-libtool:
 
 distclean-libtool:
 	-rm -f libtool config.lt
+install-include_libhdfsHEADERS: $(include_libhdfs_HEADERS)
+	@$(NORMAL_INSTALL)
+	@list='$(include_libhdfs_HEADERS)'; test -n "$(include_libhdfsdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(include_libhdfsdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(include_libhdfsdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(include_libhdfsdir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(include_libhdfsdir)" || exit $$?; \
+	done
+
+uninstall-include_libhdfsHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(include_libhdfs_HEADERS)'; test -n "$(include_libhdfsdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(include_libhdfsdir)'; $(am__uninstall_files_from_dir)
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -470,9 +497,9 @@ distclean-tags:
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(include_libhdfsdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -529,7 +556,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-include_libhdfsHEADERS
 
 install-dvi: install-dvi-am
 
@@ -577,7 +604,8 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLTLIBRARIES
+uninstall-am: uninstall-include_libhdfsHEADERS \
+	uninstall-libLTLIBRARIES
 
 .MAKE: check-am install-am install-strip
 
@@ -587,13 +615,15 @@ uninstall-am: uninstall-libLTLIBRARIES
 	distclean-generic distclean-libtool distclean-tags dvi dvi-am \
 	html html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-libLTLIBRARIES install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	install-exec-am install-html install-html-am \
+	install-include_libhdfsHEADERS install-info install-info-am \
+	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-libLTLIBRARIES
+	tags uninstall uninstall-am uninstall-include_libhdfsHEADERS \
+	uninstall-libLTLIBRARIES
 
 
 @PRODUCT_MK@
