@@ -62,7 +62,7 @@ then
   else
     cd /System/Library/Frameworks/JavaVM.framework/Headers
   fi
-  CFLAGS="$CFLAGS -m${JVM_ARCH} -I`/bin/pwd -P`"
+  CFLAGS="$CFLAGS -I`/bin/pwd -P`"
   cd $_prevdir
   unset _prevdir
 fi
@@ -79,8 +79,8 @@ AP_PROG_JAR()
 AP_JVM_LIBDIR()
 if test "$supported_os" != "darwin"
 then
-  CFLAGS="$CFLAGS -m${JVM_ARCH} -I$JAVA_HOME/include -I$JAVA_HOME/include/$supported_os"
-  LDFLAGS="$LDFLAGS -m${JVM_ARCH} -L$LIB_JVM_DIR -ljvm -shared -Wl,-x"
+  CFLAGS="$CFLAGS -I$JAVA_HOME/include -I$JAVA_HOME/include/$supported_os"
+  LDFLAGS="$LDFLAGS -L$LIB_JVM_DIR -ljvm -shared -Wl,-x"
   AC_MSG_RESULT([VALUE OF JVM_ARCH IS :$JVM_ARCH])
 fi
 

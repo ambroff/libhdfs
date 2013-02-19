@@ -12399,7 +12399,7 @@ then
   else
     cd /System/Library/Frameworks/JavaVM.framework/Headers
   fi
-  CFLAGS="$CFLAGS -m${JVM_ARCH} -I`/bin/pwd -P`"
+  CFLAGS="$CFLAGS -I`/bin/pwd -P`"
   cd $_prevdir
   unset _prevdir
 fi
@@ -12893,8 +12893,8 @@ $as_echo "ohh u there ... $LIB_JVM_DIR" >&6; }
 
 if test "$supported_os" != "darwin"
 then
-  CFLAGS="$CFLAGS -m${JVM_ARCH} -I$JAVA_HOME/include -I$JAVA_HOME/include/$supported_os"
-  LDFLAGS="$LDFLAGS -m${JVM_ARCH} -L$LIB_JVM_DIR -ljvm -shared -Wl,-x"
+  CFLAGS="$CFLAGS -I$JAVA_HOME/include -I$JAVA_HOME/include/$supported_os"
+  LDFLAGS="$LDFLAGS -L$LIB_JVM_DIR -ljvm -shared -Wl,-x"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: VALUE OF JVM_ARCH IS :$JVM_ARCH" >&5
 $as_echo "VALUE OF JVM_ARCH IS :$JVM_ARCH" >&6; }
 fi

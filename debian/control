@@ -1,7 +1,9 @@
 Source: libhdfs
 Priority: net
 Maintainer: Kyle Ambroff <ambroff@jawbone.com>
-Build-Depends: debhelper (>= 8.0.0), cdbs
+Build-Depends: debhelper (>= 8.0.0),
+ cdbs,
+ default-jdk
 Standards-Version: 3.9.3
 Section: libs
 Homepage: http://hadoop.apache.org/
