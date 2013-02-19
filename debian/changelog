@@ -1,0 +1,5 @@
+libhdfs (1.0.4-1~jb1) lucid; urgency=low
+
+  * Initial release.
+
+ -- Kyle Ambroff <ambroff@jawbone.com>  Mon, 18 Feb 2013 18:06:37 -0800
