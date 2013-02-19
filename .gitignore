@@ -1,7 +1,16 @@
+*.o
+*.lo
+*.la
+/.libs/
 /Makefile
 /config.guess.cdbs-orig
 /config.log
 /config.status
 /config.sub.cdbs-orig
+/debian/*.debhelper*
+/debian/*.substvars
+/debian/libhdfs-dev/
+/debian/libhdfs1/
 /debian/stamp-*
+/debian/tmp/
 /libtool
